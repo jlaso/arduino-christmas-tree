@@ -11,11 +11,11 @@ void setup() {
 // bottom-middle-top (fading in and out in sequence bottom to top and go down)
 void cycleFadeSequence() {
   int sense = 1;
-  int fadeAmount = 2;
-  int minFade = 5;
-  int maxFade = 100; 
-  int delay1 = 50;
-  int delay2 = 250;
+  int fadeAmount = 1;
+  int minFade = 2;
+  int maxFade = 60; 
+  int delay1 = 10;
+  int delay2 = 80;
 
   int botbright = minFade;
   int midbright = minFade;
@@ -71,32 +71,34 @@ void cycleOnOffSequence() {
   int delay1 = 50;
   int delay2 = 250;
   int current = 1;
+  int maxBright = 10;
+  int minBright = 1;  
 
-  digitalWrite(botled, 0);
-  digitalWrite(midled, 0);
-  digitalWrite(topled, 0);
+  analogWrite(botled, minBright);
+  analogWrite(midled, minBright);
+  analogWrite(topled, minBright);
   
-  while(current < 4){
+  while(current < 10){
 
-    digitalWrite(botled, 1);
-
-    delay(delay2);
-
-    digitalWrite(botled, 0);
-    digitalWrite(midled, 1);
+    analogWrite(botled, maxBright);
 
     delay(delay2);
 
-    digitalWrite(midled, 0);
-    digitalWrite(topled, 1);
+    analogWrite(botled, minBright);
+    analogWrite(midled, maxBright);
+
+    delay(delay2);
+
+    analogWrite(midled, minBright);
+    analogWrite(topled, maxBright);
 
     delay(delay2);
     
-    digitalWrite(topled, 0);
-    digitalWrite(midled, 1);
+    analogWrite(topled, minBright);
+    analogWrite(midled, maxBright);
 
     delay(delay2);
-    digitalWrite(midled, 0);
+    analogWrite(midled, minBright);
 
     current++;
     
@@ -109,7 +111,7 @@ void cycleFadeAllLeds() {
   int sense = 1;
   int fadeAmount = 2;
   int minFade = 5;
-  int maxFade = 100; 
+  int maxFade = 60; 
   int delay1 = 50;
   int delay2 = 250;
 
@@ -154,21 +156,22 @@ void cycleFadeAllLeds() {
 void cycleOnOffAllLeds() {  
 
   int delay1 = 50;
-  int delay2 = 250;
+  int delay2 = 500;
   int current = 1;
+  int maxBright = 50;
+  int minBright = 2;
 
-  
   while(current < 6){
 
-    digitalWrite(botled, 0);
-    digitalWrite(midled, 0);
-    digitalWrite(topled, 0);
+    analogWrite(botled, minBright);
+    analogWrite(midled, minBright);
+    analogWrite(topled, minBright);
 
     delay(delay2);
     
-    digitalWrite(botled, 1);
-    digitalWrite(midled, 1);    
-    digitalWrite(topled, 1);
+    analogWrite(botled, maxBright);
+    analogWrite(midled, maxBright);    
+    analogWrite(topled, maxBright);
 
     delay(delay2);
 
@@ -178,7 +181,10 @@ void cycleOnOffAllLeds() {
 }
 void loop() {
   cycleOnOffAllLeds();
+  delay(1000);
+  cycleOnOffSequence();
   cycleFadeAllLeds();
   cycleOnOffSequence();
   cycleFadeSequence();
+  cycleOnOffSequence();
 }
